@@ -1,8 +1,8 @@
-// All middleware functions require next parameter
+// All middleware functions require 3 parameters req, res and next.
 // Get all bootcamps (GET METHOD) (/api/v1/bootcamps)
 // Public route
 exports.getBootcamps = (req, res, next) => {
-    res.status(200).json({ success: true, msg: 'Show all bootcamps'});
+    res.status(200).json({ success: true, msg: 'Show all bootcamps' });
 }
 
 // Get a single bootcamp (GET METHOD) (/api/v1/bootcamps/:id)
