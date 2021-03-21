@@ -13,8 +13,11 @@ connectDB();
 // Route files
 const bootcamps = require('./routes/bootcamps');
 
-
 const app = express();
+
+// Body parser
+app.use(express.json());
+
 
 // Dev logging middleware 
 // Morgan is basically logger to see your reqeusts
