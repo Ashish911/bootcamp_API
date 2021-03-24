@@ -7,13 +7,20 @@ const Bootcamp = require('../models/Bootcamp');
 // Get all bootcamps (GET METHOD) (/api/v1/bootcamps)
 // Public route
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
-    
-    const bootcamp = await Bootcamp.find();
+    let query;
+
+    let queryStr = JSON.stringify(req.query);
+
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+
+    query = Bootcamp.find(JSON.parse(queryStr));
+
+    const bootcamps = await query;
 
     res.status(200).json({
         success: true,
         count: bootcamps.length,
-        data: bootcamp
+        data: bootcamps
     })
 });
 
