@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
 const fileupload = require('express-fileupload');
+const cookeParser = require('cookie-parser');
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
 
@@ -17,12 +18,15 @@ connectDB();
 const bootcamps = require('./routes/bootcamps');
 const courses = require('./routes/courses');
 const auth = require('./routes/auth');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
 // Body parser
 app.use(express.json());
 
+// Cookie parser
+app.use(cookieParser());
 
 // Dev logging middleware 
 // Morgan is basically logger to see your reqeusts
