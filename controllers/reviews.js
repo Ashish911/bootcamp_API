@@ -41,3 +41,30 @@ exports.getReview = asyncHandler(async (req, res, next) => {
         data: review
     })
 })
+
+// Add a review (POST METHOD) (/api/v1/bootcamps/:bootcampId/reviews)
+// Private route
+
+exports.addReview = asyncHandler(async (req, res, next) => {
+
+    req.body.bootcamp = req.params.bootcampId;
+    req.body.user = req.user.id;
+
+    const bootcamp = await Bootcamp.findById(req.params.bootcampId);
+
+    if(!bootcamp) {
+        return next(new ErrorResponse(`No bootcamp with the id of ${req.params.bootcampId}`), 404);
+    }
+
+    // Make sure user is not a bootcamp Owner 
+    if(bootcamp.user.toString() === req.user.id && req.user.role !== 'publisher') {
+        return next(new ErrorResponse(`Bootcamp Owner with id ${req.user.id} is not authorized to post a review on bootcamp ${bootcamp._id}`, 401));
+    }
+
+    const review = await Review.create(req.body);
+
+    res.status(201).json({
+        success: true,
+        data: review
+    })
+})
