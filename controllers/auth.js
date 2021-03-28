@@ -51,6 +51,20 @@ exports.login = asyncHandler(async (req, res, next) => {
 
 })
 
+// Log Out User / Clear Cookie (GET METHOD) (/api/v1/auth/logout)
+// Private route
+exports.logout = asyncHandler(async (req, res, next) => {
+    res.cookie('token', 'none', {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true
+    });
+
+    res.status(200).json({
+        success: true,
+        data: {}
+    })
+})
+
 // Get current logged in User (GET METHOD) (/api/v1/auth/me)
 // Private route
 exports.getMe = asyncHandler(async (req, res, next) => {
